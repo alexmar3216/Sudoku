@@ -1,6 +1,6 @@
 //Alexander Marriott
 //CS 143
-//HW #2: Sudoku #2 (isValid, isSolved) 
+//HW #3: Sudoku #3 (solve)
 import java.util.*;
 import java.io.*;
 public class MySudokuBoard{
@@ -200,7 +200,33 @@ public class MySudokuBoard{
       return true;
    }
 
-
+   // pre: none
+   // post: A boolean value indcating that the board is solved will be returned. The board will
+   //       also be solved.
+   
+   public boolean solve(){
+      boolean boardSolved = false;
+      if(!isValid()){
+         return false;
+      } else if (isSolved()){
+         return true;
+      } else{
+         for(int row=0; row<9; row++){
+            for(int col=0; col<9; col++){
+               if(board[row][col] == 0){
+                  for(int i=1; i<=9 && !boardSolved;i++){
+                     board[row][col] = i;
+                     boardSolved = solve();
+                  }
+                  if(!boardSolved){
+                     board[row][col] = 0;
+                  }
+               }
+            }
+         }  
+      }
+      return boardSolved;
+   }
 
 }
 
